@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seed.mybatisRedis.entity.dao.DemoMapper">
+  <resultMap id="BaseResultMap" type="com.seed.mybatisRedis.entity.Demo">
+    <constructor>
+      <arg column="C1" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="C2" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="C2_UP" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    C1, C2, C2_UP
+  </sql>
+  <select id="selectByExample" parameterType="com.seed.mybatisRedis.entity.DemoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from demo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.seed.mybatisRedis.entity.DemoExample">
+    delete from demo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.seed.mybatisRedis.entity.Demo">
+    insert into demo (C1, C2, C2_UP)
+    values (#{c1,jdbcType=VARCHAR}, #{c2,jdbcType=INTEGER}, #{c2Up,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.seed.mybatisRedis.entity.Demo">
+    insert into demo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="c1 != null">
+        C1,
+      </if>
+      <if test="c2 != null">
+        C2,
+      </if>
+      <if test="c2Up != null">
+        C2_UP,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="c1 != null">
+        #{c1,jdbcType=VARCHAR},
+      </if>
+      <if test="c2 != null">
+        #{c2,jdbcType=INTEGER},
+      </if>
+      <if test="c2Up != null">
+        #{c2Up,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.seed.mybatisRedis.entity.DemoExample" resultType="java.lang.Long">
+    select count(*) from demo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update demo
+    <set>
+      <if test="record.c1 != null">
+        C1 = #{record.c1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.c2 != null">
+        C2 = #{record.c2,jdbcType=INTEGER},
+      </if>
+      <if test="record.c2Up != null">
+        C2_UP = #{record.c2Up,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update demo
+    set C1 = #{record.c1,jdbcType=VARCHAR},
+      C2 = #{record.c2,jdbcType=INTEGER},
+      C2_UP = #{record.c2Up,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
