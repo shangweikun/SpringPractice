@@ -11,5 +11,6 @@ public class SpringDemoApplication {
 				"classpath:spring5-fruit.xml");
 		Fruit apple = (Fruit) applicationContext.getBean("apple");
 		apple.eat();
+		System.out.println(apple.getClass() + ":" + apple.hashCode());
 	}
 }
