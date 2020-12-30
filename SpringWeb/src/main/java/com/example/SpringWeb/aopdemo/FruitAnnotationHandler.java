@@ -1,10 +1,10 @@
 package com.example.SpringWeb.aopdemo;
 
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
+
+import java.lang.reflect.Field;
 
 @Component
 @Aspect
@@ -23,4 +23,17 @@ public class FruitAnnotationHandler {
 	public void afterEatFruit() {
 		System.out.println("I have eat fruit" + this.hashCode());
 	}
+
+	@AfterReturning(pointcut = "eatFruit()", returning = "returnValue")
+	public void afterReturnEatFruit(Object returnValue) throws NoSuchFieldException, IllegalAccessException {
+		if (returnValue instanceof Apple) {
+			System.out.println("I have eat Apple");
+		}
+
+		Field field;
+		if (!ObjectUtils.isEmpty((field = returnValue.getClass().getField("a")))) {
+			System.out.println(field.get(returnValue));
+		}
+	}
+
 }

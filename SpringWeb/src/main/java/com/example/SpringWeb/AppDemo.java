@@ -32,7 +32,7 @@ public class AppDemo {
 		return tests;
 	}
 
-	public static void main(String[] args) throws Exception {
+	public /*static*/ void main(String[] args) throws Exception {
 		Test[] tests = (Test[]) test2();
 		Arrays.stream(tests).forEach(System.out::println);
 	}
