@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Apple {
-	int weight;
+	Integer weight;
 	String color;
 }
